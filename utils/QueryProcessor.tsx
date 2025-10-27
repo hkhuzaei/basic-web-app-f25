@@ -38,7 +38,7 @@ export default function QueryProcessor(query: string): string {
       return "I couldn’t find any numbers in your question.";
     }
   }
-  
+
   if (query.toLowerCase().includes("which of the following numbers is both a square and a cube")) {
     // Extract all numbers from the question
     const numbers = query.match(/\d+/g)?.map(Number);
@@ -56,6 +56,18 @@ export default function QueryProcessor(query: string): string {
         : "None of the numbers are both perfect squares and cubes.";
     } else {
       return "I couldn’t find any numbers in your question.";
+    }
+  }
+
+  if (query.toLowerCase().includes("multiplied by")) {
+    // Extract the two numbers
+    const numbers = query.match(/\d+/g)?.map(Number);
+  
+    if (numbers && numbers.length === 2) {
+      const result = numbers[0] * numbers[1];
+      return result.toString();
+    } else {
+      return "I couldn't find two numbers to multiply.";
     }
   }
   return "";
