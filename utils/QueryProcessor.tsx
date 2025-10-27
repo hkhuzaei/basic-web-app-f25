@@ -75,5 +75,16 @@ export default function QueryProcessor(query: string): string {
       return "I couldn't find two numbers to multiply.";
     }
   }
+  if (query.toLowerCase().includes("minus")) {
+    // Extract numbers from the query
+    const numbers = query.match(/\d+/g)?.map(Number);
+  
+    if (numbers && numbers.length === 2) {
+      const result = numbers[0] - numbers[1];
+      return result.toString();
+    } else {
+      return "I couldn't find two numbers to subtract.";
+    }
+  }
   return "";
 }
