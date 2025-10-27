@@ -101,5 +101,30 @@ export default function QueryProcessor(query: string): string {
       return result.length > 0 ? result.join(", ") : "None of the numbers are prime.";
     }
   }
+
+  if (query.toLowerCase().includes("plus")) {
+    // Extract all numbers from the query
+    const numbers = query.match(/\d+/g)?.map(Number);
+  
+    if (numbers && numbers.length > 0) {
+      const result = numbers.reduce((acc, curr) => acc + curr, 0);
+      return result.toString();
+    } else {
+      return "I couldn't find any numbers to add.";
+    }
+  }
+
+  if (query.toLowerCase().includes("to the power of")) {
+    // Extract the two numbers
+    const numbers = query.match(/\d+/g)?.map(Number);
+  
+    if (numbers && numbers.length === 2) {
+      const result = Math.pow(numbers[0], numbers[1]);
+      return result.toString();
+    } else {
+      return "I couldn't find two numbers to calculate power.";
+    }
+  }
+  
   return "";
 }
