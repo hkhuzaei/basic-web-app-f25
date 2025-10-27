@@ -86,5 +86,32 @@ export default function QueryProcessor(query: string): string {
       return "I couldn't find two numbers to subtract.";
     }
   }
+
+  if (query.toLowerCase().includes("prime")) {
+    // Extract numbers from the query
+    const numbers = query.match(/\d+/g)?.map(Number);
+  
+    if (numbers && numbers.length > 0) {
+      // Helper function to check if a number is prime
+      const isPrime = (num: number) => {
+        if (num < 2) return false;
+        for (let i = 2; i <= Math.sqrt(num); i++) {
+          if (num % i === 0) return false;
+        }
+        return true;
+      };
+  
+      // Filter prime numbers
+      const primes = numbers.filter(isPrime);
+  
+      if (primes.length > 0) {
+        return `The prime numbers are: ${primes.join(", ")}`;
+      } else {
+        return "None of the numbers are prime.";
+      }
+    } else {
+      return "I couldn't find any numbers to check for primality.";
+    }
+  }
   return "";
 }
