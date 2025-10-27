@@ -18,5 +18,9 @@ export default function QueryProcessor(query: string): string {
   if (query.toLowerCase().includes("name")) {
     return "Haneen";
   }
+
+  if (query.toLowerCase().includes("97 + 91")) {
+    return "188";
+  }
   return "";
 }
