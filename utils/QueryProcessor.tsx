@@ -38,5 +38,25 @@ export default function QueryProcessor(query: string): string {
       return "I couldn’t find any numbers in your question.";
     }
   }
+  
+  if (query.toLowerCase().includes("which of the following numbers is both a square and a cube")) {
+    // Extract all numbers from the question
+    const numbers = query.match(/\d+/g)?.map(Number);
+  
+    if (numbers && numbers.length > 0) {
+      // Filter numbers that are both perfect squares and cubes (i.e., perfect 6th powers)
+      const result = numbers.filter(num => {
+        const sixthRoot = Math.round(Math.pow(num, 1/6));
+        return Math.pow(sixthRoot, 6) === num;
+      });
+  
+      // Return the matching numbers as a comma-separated string or a fallback message
+      return result.length > 0
+        ? result.join(", ")
+        : "None of the numbers are both perfect squares and cubes.";
+    } else {
+      return "I couldn’t find any numbers in your question.";
+    }
+  }
   return "";
 }
