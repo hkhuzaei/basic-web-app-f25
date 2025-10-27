@@ -25,5 +25,18 @@ export default function QueryProcessor(query: string): string {
   if (query.toLowerCase().includes("9 + 84")) {
     return "93";
   }
+
+  if (query.toLowerCase().includes("which of the following numbers is the largest")) {
+    // Extract all numbers from the question
+    const numbers = query.match(/\d+/g)?.map(Number);
+  
+    // Check if numbers were found
+    if (numbers && numbers.length > 0) {
+      const largest = Math.max(...numbers);
+      return largest.toString();
+    } else {
+      return "I couldn’t find any numbers in your question.";
+    }
+  }
   return "";
 }
