@@ -88,29 +88,17 @@ export default function QueryProcessor(query: string): string {
   }
 
   if (query.toLowerCase().includes("prime")) {
-    // Extract numbers from the query
-    const numbers = query.match(/\d+/g)?.map(Number);
-  
-    if (numbers && numbers.length > 0) {
-      // Helper function to check if a number is prime
-      const isPrime = (num: number) => {
-        if (num < 2) return false;
-        for (let i = 2; i <= Math.sqrt(num); i++) {
-          if (num % i === 0) return false;
+    const primesMatch = query.match(/which of the following numbers are primes.*?([\d,\s]+)/i);
+    if (primesMatch) {
+      const numbers = primesMatch[1].split(",").map(n => parseInt(n.trim()));
+      const result = numbers.filter(n => {
+        if (isNaN(n) || n < 2) return false;
+        for (let i = 2; i <= Math.sqrt(n); i++) {
+          if (n % i === 0) return false;
         }
         return true;
-      };
-  
-      // Filter prime numbers
-      const primes = numbers.filter(isPrime);
-  
-      if (primes.length > 0) {
-        return `The prime numbers are: ${primes.join(", ")}`;
-      } else {
-        return "None of the numbers are prime.";
-      }
-    } else {
-      return "I couldn't find any numbers to check for primality.";
+      });
+      return result.length > 0 ? result.join(", ") : "None of the numbers are prime.";
     }
   }
   return "";
