@@ -125,6 +125,29 @@ export default function QueryProcessor(query: string): string {
       return "I couldn't find two numbers to calculate power.";
     }
   }
+
+  if (query.toLowerCase().includes("plus") || query.toLowerCase().includes("multiplied by")) {
+    // Split the query into parts by "plus"
+    const additionParts = query.toLowerCase().split("plus").map(part => part.trim());
+  
+    let total = 0;
+  
+    additionParts.forEach(part => {
+      if (part.includes("multiplied by")) {
+        // Handle multiplication inside this part
+        const numbers = part.match(/\d+/g)?.map(Number);
+        if (numbers && numbers.length === 2) {
+          total += numbers[0] * numbers[1];
+        }
+      } else {
+        // Single number, just add it
+        const number = parseInt(part.match(/\d+/)?.[0] || "0");
+        total += number;
+      }
+    });
+  
+    return total.toString();
+  }
   
   return "";
 }
