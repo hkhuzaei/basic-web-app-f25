@@ -19,11 +19,16 @@ export default function QueryProcessor(query: string): string {
     return "Haneen";
   }
 
-  if (query.toLowerCase().includes("97 + 91")) {
-    return "188";
-  }
-  if (query.toLowerCase().includes("9 + 84")) {
-    return "93";
+  if (query.toLowerCase().includes("plus")) {
+    // Extract numbers from the query
+    const numbers = query.match(/\d+/g)?.map(Number);
+  
+    if (numbers && numbers.length === 2) {
+      const result = numbers[0] + numbers[1];
+      return result.toString();
+    } else {
+      return "I couldn't find two numbers to add.";
+    }
   }
 
   if (query.toLowerCase().includes("which of the following numbers is the largest")) {
